@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "DzBVwgjrcPs=",
+  "dgSpecHash": "FIou1qVZEek=",
   "success": true,
   "projectFilePath": "C:\\Users\\eliza\\source\\repos\\BookLibraryMicroservice\\NotificationService\\NotificationService.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\eliza\\.nuget\\packages\\confluent.kafka\\2.10.0\\confluent.kafka.2.10.0.nupkg.sha512",
+    "C:\\Users\\eliza\\.nuget\\packages\\librdkafka.redist\\2.10.0\\librdkafka.redist.2.10.0.nupkg.sha512"
+  ],
   "logs": []
 }
