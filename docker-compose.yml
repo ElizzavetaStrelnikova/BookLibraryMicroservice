@@ -47,6 +47,54 @@
     volumes:
       - kafka_data:/var/lib/kafka/data
 
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - book-service
+      - reservation-service
+    environment:
+      - Jwt__Key=your_super_secret_key_here
+      - Services__BookService=http://book-service:80
+
+  book-service:
+    build:
+      context: .
+      dockerfile: BookService/Dockerfile
+    ports:
+      - "5001:80"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - ConnectionStrings__Postgres=Host=postgres;Database=book_library;Username=postgres;Password=postgres
+      - Redis__ConnectionString=redis
+
+  reservation-service:
+    build:
+      context: .
+      dockerfile: ReservationService/Dockerfile
+    ports:
+      - "5002:80"
+    depends_on:
+      - mongodb
+      - kafka
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - MongoDB__ConnectionString=mongodb://admin:admin@mongodb:27017
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      - Kafka__BootstrapServers=kafka:9092
+      - SendGrid__ApiKey=your_sendgrid_key
 volumes:
   postgres_data:
   mongodb_data:
